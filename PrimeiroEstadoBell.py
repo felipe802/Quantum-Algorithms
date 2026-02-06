@@ -1,4 +1,3 @@
-# %%
 from qiskit import QuantumCircuit
 from qiskit_aer import AerSimulator
 import matplotlib.pyplot as plt
@@ -42,6 +41,7 @@ fig_circ.savefig("circuito1_bell.png")
 # Gerar o histograma de resultados
 fig_hist = plot_histogram(counts, title="Resultados das medições - Estado de Bell")
 fig_hist.savefig("histograma_shots")
+
 
 
 
