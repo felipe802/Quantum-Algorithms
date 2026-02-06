@@ -1,2 +1,3 @@
-# Iniciacao-Cientifica-2025-2026
-Atual iniciação científica em Computação Quântica
+# Computação Quântica
+Alguns simples códigos escritos em Python, usando as bibliotecas do Qiskit e similares.
+
