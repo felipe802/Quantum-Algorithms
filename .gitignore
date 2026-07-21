@@ -14,3 +14,9 @@
 *.lof
 *.lot
 *.lol
+
+# VS Code settings
+.vscode/
+
+# LaTeX bibliography auxiliary files
+*-blx.bib

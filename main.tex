@@ -1,6 +1,7 @@
 \documentclass[12pt, a4paper]{article}
 \usepackage[utf8]{inputenc}
-\usepackage[T1]{fontenc}      
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}      
 \usepackage{graphicx}
 \usepackage[brazil]{babel}
 \usepackage{csquotes}
@@ -10,7 +11,7 @@
 \usepackage{microtype}
 \usepackage{xurl}
 \usepackage[
-backend=biber,
+backend=bibtex,
 style=alphabetic,
 sorting=ynt
 ]{biblatex}
@@ -882,6 +883,11 @@ qc.measure([0, 1, 2, 3], [0, 1, 2, 3])
 
 \subsection{Complexidade do algoritmo de Grover}
 
+A superioridade do algoritmo de Grover reside na sua aceleração quadrática em relação a qualquer algoritmo clássico de busca não estruturada. Classicamente, para encontrar um item específico em uma lista não ordenada de $N$ elementos, o pior cenário exige a verificação de todos os itens, resultando em uma complexidade de tempo $\mathcal{O}(N)$. Em média, são necessárias $N/2$ consultas ao banco de dados.
+
+Quanticamente, a complexidade é analisada pelo número de vezes que o oráculo $U_\omega$ precisa ser invocado. Geometricamente, o estado inicial de superposição uniforme $\ket{s}$ possui um ângulo inicial $\theta \approx 2/\sqrt{N}$ em relação ao plano ortogonal ao estado alvo $\ket{\omega}$. Como cada iteração de Grover (Oráculo + Difusor) rotaciona o vetor de estado em $2\theta$, o número de iterações necessárias para alinhar o vetor o mais próximo possível do eixo vertical $\ket{\omega}$ (rotação total de $\pi/2$) é assintoticamente dado por $\frac{\pi}{4}\sqrt{N}$.
+
+Portanto, a complexidade temporal do algoritmo de Grover é $\mathcal{O}(\sqrt{N})$ \cite{nielsen2010}. Para um espaço de busca de 1 milhão de itens ($N = 10^6$), enquanto um computador clássico faria cerca de 500.000 consultas, um computado quântico encontraria a resposta com certeza probabilística em apenas $\approx 785$ consultas. 
 
 \section{Algoritmo de Shor}
 
@@ -937,6 +943,12 @@ No entanto, a compilação teórica das portas de rotação $H$ e $R_k$ sem corr
 Observa-se uma anomalia geométrica: a amplitude $-i$, que pertence ao estado $\ket{1}$ (binário 01), foi alocada no estado $\ket{10}$ (decimal 2). Para alinhar o output físico à convenção matemática clássica, é mandatório aplicar portas unitárias \texttt{SWAP} ao final do circuito para inverter a ordem espacial dos qubits.
 
 \subsection{Complexidade do algoritmo da Transformada de Fourier Quântica (QFT)}
+
+A eficiência da QFT é o motor por trás da aceleraçã'o exponencial em algoritmos de busca de período. Para processar um vetor de estado de $N = 2^n$ amplitudes (onde $n$ é o número de qubits), o melhor algoritmo clássico, a Transformada Rápida de Fourier (FFT), requer $\mathcal{O}(N \log N)$ operações. Substituindo $N$, a complexidade clássica escala como $\mathcal{O} (n 2^n)$, um crescimento exponencial em função do número de bits.
+
+No circuito quântico, a construção da QFT é avaliada pela contagem de portas lógicas elementares. Para o primeiro qubit, aplica-se uma porta Hadamard e $n - 1$ portas de rotação controlada ($R_k$). Para o segundo, uma porta Hadamard e $n-2$ rotações, e assim sucessivamente até o último qubit, que recebe apenas uma Hadamard.
+
+Essa progressão aritmética resulta em uma contagem exata de portas dada por $\sum_{i=1}^{n} i = \frac{n(n+1)}{2}$. Adicionando as $\mathcal{O}(n)$ portas SWAP necessárias no final do circuito, a complexidade total do algoritmo assintoticamente converge para $\mathcal{O}(n^2)$ \cite{nielsen2010}. Isso representa uma extraordinária aceleração exponencial, executando uma transformação global sobre $2^n$ estados utilizando um número de recursos que cresce apenas polinomialmente.
 
 \section{Algoritmo da Estimação de fases (QPE)}
 
@@ -1030,6 +1042,12 @@ Convertendo o vetor de estado medido para a base decimal, obtemos o inteiro $m =
 
 \subsection{Complexidade do algoritmo de Estimação de fases}
 
+A complexidade da Estimação de Fases Quântica (QPE) é determinada pela soma dos recursos de suas duas etapas principais: a aplicação condicional das potências do operador unitário ($U$) e a Transformada de Fourier Quântica Inversa ($QFT^{-1}$).
+
+Para estimar a fase geométrica com $t$ bits de precisão, o registrador de controle é alocado com $t$ qubits. A sub-rotina de decodificação ($QFT^{-1}$) exige, como demonstrado anteriormente, $\mathcal{O}(t^2)$ portas lógicas. Contudo, o gargalo computacional da QPE reside na fase de \textit{Phase Kickback}. O operador $U$ deve ser aplicado de forma controlada sucessivas vezes para alinhar as frequências, totalizando $2^0 + 2^1 + \dots + 2^{t-1} = 2^t - 1$ aplicações \cite{nielsen2010}.
+
+Logo, a QPE requer $\mathcal{O}(t^2)$ portas lógicas de rotina geométrica e exatas $\mathcal{O}(2^t)$ invocações controladas do operador $U$. A viabilidade de uso da QPE em algoritmos eficientes depende inteiramente da capacidade de otimizar ou pré-computar as potências de $U^k$ de forma eficiente (em tempo polinomial), que é o exato foco do Algoritmo de Shor.
+
 \subsection{Implementação do algoritmo de Shor}
 
 A implementação prática do algoritmo de Shor revela a sua natureza híbrida. Ele não é executado integralmente no hardware quântico; em vez disso, utiliza o processador quântico como um co-processador especializado para resolver o gargalo computacional do problema: a busca pelo período (função modular). O algoritmo é dividido em três etapas fundamentais.
@@ -1103,6 +1121,12 @@ if periodo_r % 2 == 0:
 A terceira e última etapa ocorre após a medição quântica. O hardware retorna estados binários (como \texttt{0100} ou \texttt{1100}) que correspondem a frações decimais da fase (ex: $0.25 ou 0.75$). Através do algoritmo clássico de Frações Contínuas (\texttt{limit\_denominator}), o denominador da fração mais simples é extraído, revelando de forma determinística o período $r = 4$. Com esse período, sendo ele par, aplica-se a fórmula matemática de Euclides, resultando no cálculo bem-sucedido dos fatores primos $3$ e $5$, quebrando com sucesso a criptografia do número $15$.
 
 \subsection{Complexidade do algoritmo de Shor}
+
+O algoritmo de Shor consolida a supremacia quântica ao resolver o problema de fatoração de inteiros em tempo polinomial. Classicamente, o algoritmo mais eficiente conhecido é o \textit{General Number Field Sieve} (GNFS), que opera em tempo super-polinomial: $\mathcal{O}\left(\exp\left(c (\log N)^{1/3} (\log \log N)^{2/3}\right)\right)$. Na prática, isso torna a fatoração de chaves criptográficas (como o RSA de 2048 bits) um problema intratável para a arquitetura clássica.
+
+A abordagem de Shor converte a fatoração no problema de busca do período $r$ da função modular $f(x) = a^x \pmod{N}$, utilizando a sub-rotina QPE. O processamento puramente clássico de pré e pós-processamento (como o Máximo Divisor Comum via algoritmo de Euclides e as frações contínuas) possui complexidade polinomial suportável de $\mathcal{O}(n^3)$, onde $n = \log N$ é o número de bits para representar o inteiro $N$.
+
+O gargalo computacional recai sobre a implementação em nível de portas lógicas do operador unitário de exponenciação modular controlada no hardware quântico. Através de métodos eficientes de multiplicação e adição modular repetida, essa operação inteira pode ser construída utilizando $\mathcal{O}(n^3)$ portas lógicas universais \cite{nielsen2010}. Somada à QFT no registrador de medição $\mathcal{O}(n^2)$, a complexidade geral do Algoritmo de Shor é assintoticamente limitada a $\mathcal{O}(n^3)$. Esta drástica redução de super-polinomial para polinomial é o que fundamenta a futura ameaça quântica à criptografia moderna.
 
 \section{Pesquisas Futuras}
 
