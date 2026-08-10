@@ -235,25 +235,23 @@ Finalmente, \[
     \end{aligned}
 \]
 
-
 O Bra é comumente usado para calcular o produto interno entre dois vetores. A operação \(\braket{\phi}{\phi}\) resulta em um escalar, se tornando uma base para calcular probabilidades, projeções e inúmeras aplicações em mecânica quântica.
 
 Um \textbf{espaço vetorial primal} contém os objetos fundamentais do sistema, como os Kets $\ket{\psi}$. Eles representam o estado físico atual e 'moram' em um espaço complexo $V$.
 
 O \textbf{espaço dual $V^*$} contém os funcionais lineares, representados pelos Bras $\bra{\psi}$. É o conjunto de todas as funções que mapeiam um vetor do espaço primal para um escalar complexo. Essa relação é o que permite que o produto interno $\braket{\psi}{\psi}$ resulte em um número real.
 
-%\[\braket{\phi}{\psi} = 
-%\begin{pmatrix}
-%   \gamma^* & \delta^*
-%\end{pmatrix}
-%\begin{pmatrix}
-%    \alpha \\
-%    \beta
-%\end{pmatrix} =
-%\begin{pmatrix}
-%    \gamma^*\alpha & \delta^*\beta
-%\end{pmatrix}
-%\]
+\[
+\braket{\phi}{\psi} = 
+\begin{pmatrix}
+   \gamma^* & \delta^*
+\end{pmatrix}
+\begin{pmatrix}
+    \alpha \\
+    \beta
+\end{pmatrix} =
+\gamma^*\alpha + \delta^*\beta
+\]
 
 O \textbf{qubit} da computação quântica é o equivalente ao bit do computador clássico. Diferente de um bit clássico, a estrutura de espaço vetorial de $\mathcal{H}$ permite que um qubit exista em uma \textbf{combinação linear} de seus estados de base. Assim, um estado genérico é escrito como $\ket{\phi} = \alpha\ket{0} + \beta\ket{1}$, com $\alpha, \beta\in \mathbb{C}$ chamados de amplitude de probabilidade. As amplitudes podem ser negativas ou complexas. É essa característica que permite a \textbf{interferência} (amplitudes que se cancelam), algo que não existe na probabilidade clássica. Matematicamente, $\ket{0}$ e $\ket{1}$ são vetores ortogonais. Mas, fisicamente, eles representam dois estados distinguíveis e mensuráveis de um sistema quântico real, como o spin de um elétron, polarização de um fóton, níveis de energia de um átomo, etc. Embora a base computacional $(\ket{0}, \ket{1})$, seja a mais comum, o qubit pode ser representado em outras bases, como a de sinal   Para calcular a probabilidade de medir o qubit como 0 ou 1, Calcula-se o módulo ao quadrado da sua amplitude correspondente.
 
@@ -756,7 +754,7 @@ qc_sim.measure([0, 1, 2], [0, 1, 2])
     \label{fig:sub_routine_circ}
 \end{figure}
 
-A simulação estatística deste circuito confirma a teoria: as medições retornam o estado $\ket{000}$ em aproximadamente 50\% das execuções (quando o controle colapsa para 0), e os estados $\ket{100}$ e $\ket{111}$ em cerca de 25\% cada (quando o controle colapsa para 1, ativando a rotina de Bell. 
+A simulação estatística deste circuito confirma a teoria: as medições retornam o estado $\ket{000}$ em aproximadamente 50\% das execuções (quando o controle colapsa para 0), e os estados $\ket{100}$ e $\ket{111}$ em cerca de 25\% cada (quando o controle colapsa para 1, ativando a rotina de Bell). 
 
 \section{Algoritmo de Grover}
 
@@ -890,7 +888,7 @@ A superioridade do algoritmo de Grover reside na sua aceleração quadrática em
 
 Quanticamente, a complexidade é analisada pelo número de vezes que o oráculo $U_\omega$ precisa ser invocado. Geometricamente, o estado inicial de superposição uniforme $\ket{s}$ possui um ângulo inicial $\theta \approx 2/\sqrt{N}$ em relação ao plano ortogonal ao estado alvo $\ket{\omega}$. Como cada iteração de Grover (Oráculo + Difusor) rotaciona o vetor de estado em $2\theta$, o número de iterações necessárias para alinhar o vetor o mais próximo possível do eixo vertical $\ket{\omega}$ (rotação total de $\pi/2$) é assintoticamente dado por $\frac{\pi}{4}\sqrt{N}$.
 
-Portanto, a complexidade temporal do algoritmo de Grover é $\mathcal{O}(\sqrt{N})$ \cite{nielsen2010}. Para um espaço de busca de 1 milhão de itens ($N = 10^6$), enquanto um computador clássico faria cerca de 500.000 consultas, um computado quântico encontraria a resposta com certeza probabilística em apenas $\approx 785$ consultas. 
+Portanto, a complexidade temporal do algoritmo de Grover é $\mathcal{O}(\sqrt{N})$ \cite{nielsen2010}. Para um espaço de busca de 1 milhão de itens ($N = 10^6$), enquanto um computador clássico faria cerca de 500.000 consultas, um computador quântico encontraria a resposta com certeza probabilística em apenas $\approx 785$ consultas. 
 
 \section{Transformada de Fourier Quântica (QFT)}
 
