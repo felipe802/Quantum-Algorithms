@@ -13,9 +13,10 @@ The table below presents a summary of everything implemented in the repository. 
 | Module | Quantum Algorithms / Concepts | Main Files | Status and Visual Results |
 | :--- | :--- | :--- | :--- |
 | 🔔 **[EstadoBell](./EstadoBell)** | Maximal Entanglement, Bell States ($|\Phi^{\pm}\rangle$, $|\Psi^{\pm}\rangle$), GHZ State, Controlled Bell, and CHSH Inequality. | `FirstBellState.py` <br> `GHZState.py` <br> `CHSH_Inequality.py` | ✅ Circuits, Histograms, and Numerical Proof of Non-Locality ($S \approx 2.82$). |
-| 🔍 **[Grover](./Grover)** | Quantum unstructured search with quadratic speedup ($O(\sqrt{N})$), phase Oracle, and Diffuser. | `GroverAlgorithm.py` | ✅ Amplitude amplification of $|\omega\rangle = |0101\rangle$ with success > 95%. |
+| 🔍 **[Grover](./Grover)** | Quantum unstructured search with quadratic speedup ($\mathcal{O}(\sqrt{N})$), phase Oracle, and Diffuser. | `GroverAlgorithm.py` | ✅ Amplitude amplification of $|\omega\rangle = |0101\rangle$ with success > 95%. |
 | 🔄 **[QFT](./QFT)** | Quantum Fourier Transform, phase mapping, controlled fractional rotations, and bit-reversal correction. | `QFT_Algorithm.py` | ✅ Phase encoding and geometric correction via `SWAP` gates analyzed on state $|3\rangle$. |
 | 🎚️ **[QPE](./QPE)** | Quantum Phase Estimation, *Phase Kickback*, cascaded controlled operators, and decoding via $QFT^\dagger$. | `QPE_Algorithm.py` | ✅ Exact eigenvalue extraction for secret phase $\theta = 0.125$ with 3 qubits. |
+| 🔑 **[Shor](./Shor)** | Shor's Algorithm for integer factorization in polynomial time ($\mathcal{O}(n^3)$), Order/Period Finding, and Continued Fractions. | `ShorAlgorithm.py` | ✅ Factoring composite number $N = 15$ with $a = 7$ to yield prime factors $3$ and $5$. |
 
 ---
 
@@ -64,6 +65,9 @@ python Grover/GroverAlgorithm.py
 
 # Example 2: Running Quantum Phase Estimation
 python QPE/QPE_Algorithm.py
+
+# Example 3: Running Shor's Factorization Algorithm
+python Shor/ShorAlgorithm.py
 ```
 
 If you are in a Jupyter Notebook or Google Colab environment, the circuits and histograms will be rendered directly in the output cells using interactive display functions.
@@ -74,7 +78,7 @@ If you are in a Jupyter Notebook or Google Colab environment, the circuits and h
 
 * **Language:** Python 3
 * **Quantum Framework:** Qiskit (version 1.x)
-* **Quantum Simulation:** Qiskit Aer (AerSimulator)
+* **Quantum Simulation:** Qiskit Aer (`AerSimulator`)
 * **Data Visualization:** Matplotlib & Qiskit Visualization
 * **Cloud Environment:** Google Colab (interactive badges at the top of each README)
 
