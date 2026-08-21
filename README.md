@@ -17,6 +17,7 @@ The table below presents a summary of everything implemented in the repository. 
 | 🔄 **[QFT](./QFT)** | Quantum Fourier Transform, phase mapping, controlled fractional rotations, and bit-reversal correction. | `QFT_Algorithm.py` | ✅ Phase encoding and geometric correction via `SWAP` gates analyzed on state $|3\rangle$. |
 | 🎚️ **[QPE](./QPE)** | Quantum Phase Estimation, *Phase Kickback*, cascaded controlled operators, and decoding via $QFT^\dagger$. | `QPE_Algorithm.py` | ✅ Exact eigenvalue extraction for secret phase $\theta = 0.125$ with 3 qubits. |
 | 🔑 **[Shor](./Shor)** | Shor's Algorithm for integer factorization in polynomial time ($\mathcal{O}(n^3)$), Order/Period Finding, and Continued Fractions. | `ShorAlgorithm.py` | ✅ Factoring composite number $N = 15$ with $a = 7$ to yield prime factors $3$ and $5$. |
+| 🛡️ **BHT Collision** | Brassard-Høyer-Tapp algorithm solving the 2-to-1 collision problem via Birthday Paradox + Grover search. | *Theoretical Framework* | ⚡ Near-optimal quantum bound $\mathcal{O}(N^{1/3})$ queries. |
 
 ---
 
