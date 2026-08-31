@@ -20,3 +20,8 @@
 
 # LaTeX bibliography auxiliary files
 *-blx.bib
+
+# Editor and temporary files
+*.swp
+*.swo
+.DS_Store

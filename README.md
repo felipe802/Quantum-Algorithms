@@ -2,7 +2,7 @@
 
 This repository brings together clean, modular, and richly documented implementations of fundamental concepts in **Quantum Mechanics** and **Quantum Algorithms**. Developed originally as expository and practical material for **Undergraduate Research (IC)**, the project utilizes the open-source **Qiskit** (v1.x) framework to simulate quantum circuits and explore qubit behavior.
 
-[![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/drive/1MOiTPVyCiHzeF_KBl1Pt5YzVyCp3mh4w?usp=sharing)
+[![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/drive/1kZGYeHcZ014jM8A2tuBPwZPFd99C_N-d?usp=sharing)
 
 ---
 
@@ -17,7 +17,7 @@ The table below presents a summary of everything implemented in the repository. 
 | 🔄 **[QFT](./QFT)** | Quantum Fourier Transform, phase mapping, controlled fractional rotations, and bit-reversal correction. | `QFT_Algorithm.py` | ✅ Phase encoding and geometric correction via `SWAP` gates analyzed on state $|3\rangle$. |
 | 🎚️ **[QPE](./QPE)** | Quantum Phase Estimation, *Phase Kickback*, cascaded controlled operators, and decoding via $QFT^\dagger$. | `QPE_Algorithm.py` | ✅ Exact eigenvalue extraction for secret phase $\theta = 0.125$ with 3 qubits. |
 | 🔑 **[Shor](./Shor)** | Shor's Algorithm for integer factorization in polynomial time ($\mathcal{O}(n^3)$), Order/Period Finding, and Continued Fractions. | `ShorAlgorithm.py` | ✅ Factoring composite number $N = 15$ with $a = 7$ to yield prime factors $3$ and $5$. |
-| 🛡️ **BHT Collision** | Brassard-Høyer-Tapp algorithm solving the 2-to-1 collision problem via Birthday Paradox + Grover search. | *Theoretical Framework* | ⚡ Near-optimal quantum bound $\mathcal{O}(N^{1/3})$ queries. |
+| 🛡️ **[BHT Collision](./BHT)** | Brassard-Høyer-Tapp algorithm solving the 2-to-1 collision problem via Birthday Paradox + Grover search. | `BHTAlgorithm.py` | ✅ Unitary Oracle $V = F^\dagger U F$, Grover Search, and Collision Pair Recovery ($\mathcal{O}(N^{1/3})$). |
 
 ---
 

@@ -2,7 +2,7 @@
 
 This folder contains the implementation of the **Quantum Fourier Transform (QFT)**, a fundamental sub-routine for several prominent quantum algorithms, such as Shor's Algorithm (factoring) and Quantum Phase Estimation (QPE).
 
-[![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/drive/1MOiTPVyCiHzeF_KBl1Pt5YzVyCp3mh4w?usp=sharing)
+[![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/drive/1kZGYeHcZ014jM8A2tuBPwZPFd99C_N-d?usp=sharing)
 
 ---
 

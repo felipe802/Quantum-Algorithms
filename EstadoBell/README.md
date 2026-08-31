@@ -2,7 +2,7 @@
 
 This folder contains the source code and visual results for fundamental and advanced quantum entanglement concepts, from the four **Bell States** to multipartite entanglement (GHZ) and empirical tests of local realism (CHSH inequality).
 
-[![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/drive/1MOiTPVyCiHzeF_KBl1Pt5YzVyCp3mh4w?usp=sharing)
+[![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/drive/1kZGYeHcZ014jM8A2tuBPwZPFd99C_N-d?usp=sharing)
 
 ---
 

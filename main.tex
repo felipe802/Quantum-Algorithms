@@ -84,7 +84,20 @@ This work presents a practical and theoretical study of quantum computing fundam
 \tableofcontents
 
 \clearpage
-\section{Agradecimentos}
+\section*{Agradecimentos}
+\addcontentsline{toc}{section}{Agradecimentos}
+
+\vspace{1.5cm}
+
+\begin{flushleft}
+    A \textbf{Deus}, \\[1cm]
+    
+    À minha \textbf{família}, \\[1cm]
+    
+    Ao meu orientador, \textbf{Prof. Dr. André Martin Timpanaro}, \\[1cm]
+    
+    Aos \textbf{monitores e colegas da UFABC}.
+\end{flushleft}
 
 \clearpage
 \section{Introdução}
@@ -525,18 +538,17 @@ Diferente dos algoritmos clássicos que operam de forma determinística sobre bi
 Para validar a teoria do emaranhamento, implementamos o estado $\ket{\Phi^+} = \frac{1}{\sqrt{2}}(\ket{00} + \ket{11})$ utilizando a biblioteca Qiskit. O código abaixo detalha cada etapa, desde a criação do circuito até a simulação estatística.
 
 \begin{lstlisting}[caption={Implementação em Python para a geração do Primeiro Estado de Bell $\ket{\Phi^+}$. \cite{gcq_ufsc}}]
-
-# 1. Definição do circuito
-qc = QuantumCircuit(2, 2)
+# 1. Definição do circuito (2 qubits e 2 bits clássicos)
+circuito = QuantumCircuit(2, 2)
 
 # 2. Criação de Superposição (porta Hadamard)
-qc.h(0)
+circuito.h(0)
 
-# 3. Emaranhamento (porta CNOT)
-qc.cx(0, 1)
+# 3. Emaranhamento quântico (porta CNOT)
+circuito.cx(0, 1)
 
 # 4. Medição (colapso da função de onda)
-qc.measure([0, 1], [0, 1])
+circuito.measure([0, 1], [0, 1])
 \end{lstlisting}
 
 O circuito gerado pelo código pode ser visualizado na figura \ref{fig:circuito_bell_py}
@@ -554,18 +566,19 @@ Ao executar a simulação, obtivemos resultados concentrados nos estados $\ket{0
 Para a gereção do estado $\ket{\Phi^-} = \frac{1}{\sqrt{2}}(\ket{00} - \ket{11})$, introduzimos uma inversão de fase no sistema. Diferente do estado anterior, aplicamos uma porta $X$ no qubit de controle antes da porta Hadamard, garantindo que a superposição ocorra a partir do estado de base $\ket{1}$.
 
 \begin{lstlisting}[caption={Implementação em Python para a geração do Segundo Estado de Bell $\ket{\Phi^-}$.}]
-qc = QuantumCircuit(2, 2)
-# 1. Preparação: Começamos invertendo o qubit 0 para |1>
-qc.x(0)
+circuito = QuantumCircuit(2, 2)
 
-# 2. Criação de Superposição com fase
-qc.h(0)
+# 1. Invertemos o qubit de controle para |1>
+circuito.x(0)
 
-# 3. Emaranhamento (CNOT)
-qc.cx(0, 1)
+# 2. Superposição com fase relativa
+circuito.h(0)
 
-# 4. Medição 
-qc.measure([0, 1], [0, 1])
+# 3. Emaranhamento quântico (porta CNOT)
+circuito.cx(0, 1)
+
+# 4. Medição
+circuito.measure([0, 1], [0, 1])
 \end{lstlisting}
 
 O circuito resultante, apresentando a porta de pré-processamento X, pode ser visualizado na figura \ref{fig:circuito_phi_minus}.
@@ -584,19 +597,19 @@ Embora o histograma de medição apresente resultados estatisticamente idêntico
 O estado $\ket{\Psi^+} = \frac{1}{\sqrt{2}}(\ket{01} + \ket{10})$ caracteriza-se pela anti-correlação perfeita. Para implementá-lo, invertemos o qubit alvo $(\ket{q_1})$ para o estado $\ket{1}$ antes da aplicação da porta $CNOT$, alterando a paridade do resultado final.
 
 \begin{lstlisting}[caption={Implementação em Python para a geração do Terceiro Estado de Bell $\ket{\Psi^+}$.}]
-qc = QuantumCircuit(2, 2)
+circuito = QuantumCircuit(2, 2)
 
-# 1. Invertemos o qubit alvo (1) para |1>
-qc.x(1)
+# 1. Invertemos o qubit alvo para |1>
+circuito.x(1)
 
-# 2. Criação e Superposição
-qc.h(0)
+# 2. Superposição no qubit de controle
+circuito.h(0)
 
-# 3. Emaranhamento (CNOT)
-qc.cx(0, 1)
+# 3. Emaranhamento quântico (porta CNOT)
+circuito.cx(0, 1)
 
 # 4. Medição
-qc.measure([0, 1], [0, 1])
+circuito.measure([0, 1], [0, 1])
 \end{lstlisting}
 
 \begin{figure}[ht]
@@ -613,20 +626,20 @@ Neste cenário, a simulação demonstra que, ao medir $\ket{0}$ no primeiro qubi
 Finalmente, é implementado o estado $\ket{\Psi^-} = \frac{1}{\sqrt{2}} (\ket{01} - \ket{10})$, também conhecido como estado singleto. Este estado combina a anti-correlação de bits com a inversão de fase, exigindo a manipulação de ambos os qubits antes do emaranhamento.
 
 \begin{lstlisting}[caption={Implementação em Python para a geração do Quarto Estado de Bell $\ket{\Psi^-}$.}]
-qc = QuantumCircuit(2, 2)
+circuito = QuantumCircuit(2, 2)
 
-# 1. Diferente do primeiro estado, aqui invertemos ambos para |11>
-qc.x(0)
-qc.x(1)
+# 1. Invertemos ambos os qubits para |11>
+circuito.x(0)
+circuito.x(1)
 
-# 2. Criação da superposição com fase
-qc.h(0)
+# 2. Superposição com fase no qubit de controle
+circuito.h(0)
 
-# 3. Entrelaçamento
-qc.cx(0, 1)
+# 3. Emaranhamento quântico (porta CNOT)
+circuito.cx(0, 1)
 
-# 4. Medição e colapso
-qc.measure([0, 1], [0, 1])
+# 4. Medição
+circuito.measure([0, 1], [0, 1])
 \end{lstlisting}
 
 \begin{figure}[ht]
@@ -652,24 +665,22 @@ Segundo a física clássica e o princípio do realismo local \cite{nielsen2010},
 $\ket{\Phi^+}$) em ângulos específicos - tipicamente $0$ e $\pi/2$ para Alice, e $\pi/4$ e $-\pi/4$ para Bob -, o limite clássico é violado, podendo alcançar o limite de Tsirelson de $S = 2\sqrt{2} \approx 2.828$.
 
 \begin{lstlisting}[caption={Implementação do teste experimental da Desigualdade CHSH simulando a rotação de bases independentes.}]
-def circuito_chsh(theta_a, theta_b):
-  qc = QuantumCircuit(2, 2)
+def construir_circuito_chsh(angulo_alice, angulo_bob):
+    circuito = QuantumCircuit(2, 2)
+    # 1. Prepara par de Bell |Phi+>
+    circuito.h(0)
+    circuito.cx(0, 1)
+    # 2. Rotação das bases de medição (detectores de Alice e Bob)
+    circuito.ry(angulo_alice, 0)
+    circuito.ry(angulo_bob, 1)
+    circuito.measure([0, 1], [0, 1])
+    return circuito
 
-  qc.h(0)
-  qc.cx(0, 1)
-
-  # 2. Rotação das bases de medição (simula Alice e Bob girando seus detectores)
-  qc.ry(theta_a, 0)
-  qc.ry(theta_b, 1)
-
-  qc.measure([0, 1], [0, 1])
-  return qc
-
-# Ângulos que maximizam a violação quântica
-theta_A = 0               # Alice mede o eixo Z
-theta_A_linha = np.pi/2   # Alice mede no eixo X
-theta_B = np.pi/4         # Bob mede na diagonal W
-theta_B_linha = -np.pi/4  # Bob mede na diagonal V
+# Ângulos ótimos que maximizam a quebra quântica
+angulo_alice_Z = 0
+angulo_alice_X = np.pi / 2
+angulo_bob_W = np.pi / 4
+angulo_bob_V = -np.pi / 4
 \end{lstlisting}
 
 Através da simulação utilizando o \texttt{AerSimulator}, com 8192 \textit{shots} para mitigar a variância estatística, obtivemos sistematicamente valores de $S > 2$. Este resultado simula com êxito a quebra do imite clássico, confirmando a natureza não-local do emaranhamento fundamental para protocolos avançados de computação e criptografia quântica.
@@ -681,18 +692,19 @@ Expandindo os conceitos de emaranhamento explorados nos estados de Bell, o estad
 A construção deste estado segue uma lógica análoga à do estado $\ket{\Phi^+}$. Inicia-se aplicando uma porta Hadamard ao primeiro qubit, criando uma superposição inicial. Em seguida, utilizam-se as portas CNOT em cascata para propagar esse estado para os qubits adjacentes.
 
 \begin{lstlisting}[caption={Implementação em Python para a geração do Estado GHZ com emaranhamento multipartido.}]
-qc = QuantumCircuit(3, 3)
+circuito_ghz = QuantumCircuit(3, 3)
 
-qc.h(0)
+# 1. Superposição inicial no qubit 0
+circuito_ghz.h(0)
 
-# 3. Emaranhamento em cascata (portas CNOT)
-# O qubit 0 atua como controle para o alvo 1
-qc.cx(0, 1)
-# O qubit 1 (agora emaranhado com o 0) atua como controle para o alvo 2
-qc.cx(1, 2)
+# 2. Emaranhamento em cascata (portas CNOT)
+# Qubit 0 emaranha com o qubit 1:
+circuito_ghz.cx(0, 1)
+# Qubit 1 (já emaranhado) emaranha com o qubit 2:
+circuito_ghz.cx(1, 2)
 
-# Medimos os 3 qubits nos 3 bits clássicos
-qc.measure([0, 1, 2], [0, 1, 2])
+# 3. Medição dos 3 qubits
+circuito_ghz.measure([0, 1, 2], [0, 1, 2])
 \end{lstlisting}
 
 \begin{figure}
@@ -725,26 +737,24 @@ Quando a sub-rotina de Bell controlada é aplicada, ela age como a identidade ca
 O código a seguir implementa essa arquitetura modular:
 
 \begin{lstlisting}[caption={Implementação de sub-rotina controlada condicionando operações através dos métodos \texttt{control} e \texttt{append}.}]
-# Criamos o circuito do primeiro estado de Bell criado anteriormente
-qc_bell = QuantumCircuit(2, name='Bell_Prep')
-qc_bell.h(0)
-qc_bell.cx(0, 1)
+# 1. Sub-rotina independente (preparação de Bell)
+subrotina_bell = QuantumCircuit(2, name='Prepara_Bell')
+subrotina_bell.h(0)
+subrotina_bell.cx(0, 1)
 
-# 2. Criação da porta controlada
-c_bell_gate = qc_bell.to_gate().control(1)
+# 2. Criação da porta controlada (o "if" quântico)
+porta_bell_controlada = subrotina_bell.to_gate().control(1)
 
 # 3. Construção do circuito principal
-qc = QuantumCircuit(3, 3)
+circuito = QuantumCircuit(3, 3)
+circuito.h(0) # Qubit de controle em superposição
 
-qc.h(0)
+# 4. Aplicação condicional da sub-rotina
+circuito.append(porta_bell_controlada, [0, 1, 2])
 
-# 4. Aplicação da sub-rotina (compose/append)
-qc.append(c_bell_gate, [0, 1, 2])
-
-# 5. Decomposição e Medição
-# Para simular e medir, precisamos expandir a "caixa preta" da sub-rotina
-qc_sim = qc.decompose()
-qc_sim.measure([0, 1, 2], [0, 1, 2])
+# 5. Decomposição para simulação e medição
+circuito_simulado = circuito.decompose()
+circuito_simulado.measure([0, 1, 2], [0, 1, 2])
 \end{lstlisting}
 
 \begin{figure}
@@ -830,49 +840,32 @@ A essência geométrica do algoritmo de Grover reside na combinação destas dua
 
 O algoritmo de Grover foi construído de forma separada, mas executado junto. Foi criado o Oráculo e o Difusor como objetos independentes e depois usado o comando \texttt{append()} para juntá-los no circuito principal. Isso permite reutilizar o oráculo mais facilmente.
 
-\begin{lstlisting}
+\begin{lstlisting}[caption={Implementação dos componentes do Algoritmo de Grover: Oráculo para o estado alvo $\ket{0101}$ e Difusor de Householder.}]
 # 1. Construção do Oráculo (U_w) para o estado |0101>
-oraculo = QuantumCircuit(4, name="Oraculo (U_5)")
+oraculo = QuantumCircuit(4, name="Oraculo (Marca 5)")
+oraculo.x([0, 2]) # Inverte os bits 0 do estado alvo
+porta_mcz = ZGate().control(3) # Z multi-controlada
+oraculo.append(porta_mcz, [0, 1, 2, 3])
+oraculo.x([0, 2]) # Descomputação
 
-oraculo.x([0, 2])
-
-# Porta Z multi-controlada (3 controles, 1 alvo)
-mcz = ZGate().control(3)
-oraculo.append(mcz, [0, 1, 2, 3])
-
-# Descomputação para não deixar lixo quântico
-oraculo.x([0, 2])
-
-# 2. Construção do difusor (U_s) - Reflexão de Householder
-difusor = QuantumCircuit(4, name="Difusor (U_s)")
-
-# Aplica Hadamard a todos os qubits
+# 2. Construção do Difusor (U_s) - Inversão sobre a média
+difusor = QuantumCircuit(4, name="Difusor (Inversão)")
 difusor.h([0, 1, 2, 3])
-
-# Aplica X a todos (inversão sobre o estado zero)
 difusor.x([0, 1, 2, 3])
-
-# Aplica a mesma porta Z multi-controlada
-difusor.append(mcz, [0, 1, 2, 3])
-
-# Desfaz as portas X e H
+difusor.append(porta_mcz, [0, 1, 2, 3])
 difusor.x([0, 1, 2, 3])
 difusor.h([0, 1, 2, 3])
 
-# 3. Montagem do circuito completo
-qc = QuantumCircuit(4, 4)
+# 3. Montagem do circuito principal de Grover
+circuito_grover = QuantumCircuit(4, 4)
+circuito_grover.h([0, 1, 2, 3]) # Superposição uniforme
 
-# Preparação: superposição uniforme
-qc.h([0, 1, 2, 3])
+# Aplicação iterativa do Oráculo e Difusor (3 iterações)
+for rodada in range(3):
+    circuito_grover.append(oraculo.to_instruction(), [0, 1, 2, 3])
+    circuito_grover.append(difusor.to_instruction(), [0, 1, 2, 3])
 
-# Iteração Grover
-num_iteracoes = 3
-
-for _ in range(num_iteracoes):
-  qc.append(oraculo.to_instruction(), [0, 1, 2, 3])
-  qc.append(difusor.to_instruction(), [0, 1, 2, 3])
-
-qc.measure([0, 1, 2, 3], [0, 1, 2, 3])
+circuito_grover.measure([0, 1, 2, 3], [0, 1, 2, 3])
 \end{lstlisting}
 
 \begin{figure}[ht]
@@ -889,6 +882,90 @@ A superioridade do algoritmo de Grover reside na sua aceleração quadrática em
 Quanticamente, a complexidade é analisada pelo número de vezes que o oráculo $U_\omega$ precisa ser invocado. Geometricamente, o estado inicial de superposição uniforme $\ket{s}$ possui um ângulo inicial $\theta \approx 2/\sqrt{N}$ em relação ao plano ortogonal ao estado alvo $\ket{\omega}$. Como cada iteração de Grover (Oráculo + Difusor) rotaciona o vetor de estado em $2\theta$, o número de iterações necessárias para alinhar o vetor o mais próximo possível do eixo vertical $\ket{\omega}$ (rotação total de $\pi/2$) é assintoticamente dado por $\frac{\pi}{4}\sqrt{N}$.
 
 Portanto, a complexidade temporal do algoritmo de Grover é $\mathcal{O}(\sqrt{N})$ \cite{nielsen2010}. Para um espaço de busca de 1 milhão de itens ($N = 10^6$), enquanto um computador clássico faria cerca de 500.000 consultas, um computador quântico encontraria a resposta com certeza probabilística em apenas $\approx 785$ consultas. 
+
+\section{O Algoritmo BHT e o Problema da Colisão}
+
+\subsection{O Problema da Colisão em Funções 2-para-1}
+
+Proposto por Gilles Brassard, Peter Høyer e Alain Tapp em 1997, o algoritmo BHT resolve o \textit{Problema da Colisão} (\textit{Collision Problem}) \cite{nielsen2010}. Dada uma função $f: \{0, \dots, N-1\} \to \{0, \dots, N/2 - 1\}$ que é $2$-para-$1$ (cada imagem $y$ possui exatamente duas pré-imagens distintas $x_1 \neq x_2$ tais que $f(x_1) = f(x_2)$), o objetivo consiste em identificar um par de colisão $(x_1, x_2)$. Esse problema fundamenta a análise de segurança de funções de \textit{hash} criptográficas e esquemas de assinatura digital. Classicamente, a melhor abordagem probabilística baseada no Paradoxo do Aniversário requer $\mathcal{O}(\sqrt{N}) = \mathcal{O}(N^{1/2})$ consultas à função para encontrar uma colisão com alta probabilidade.
+
+\subsection{A Estratégia Híbrida e a Construção do Oráculo BHT}
+
+O algoritmo BHT supera a barreira clássica do paradoxo do aniversário ao combinar memória clássica com a busca de Grover em um protocolo híbrido de duas etapas:
+
+\begin{enumerate}[label=\textbf{\arabic*.}]
+    \item \textbf{Amostragem Clássica:} Sorteia-se um subconjunto de $M = \lceil N^{1/3} \rceil$ entradas aleatórias e armazena-se os pares $(x, f(x))$ em uma tabela \textit{hash}. Se houver colisão na própria amostra, o processo é concluído classicamente.
+    \item \textbf{Busca Quântica de Grover:} Se não houver colisão na tabela, existem exatamente $M$ entradas fora da amostra que colidem com os valores previamente tabelados. Aplica-se a busca de Grover sobre o espaço de dimensão $N$ para localizar um estado $x^*$ cuja imagem $f(x^*)$ coincida com algum valor da tabela clássica.
+\end{enumerate}
+
+Para implementar o oráculo quântico $V$ que reconhece as colisões, decompõe-se o operador unitário na estrutura modular:
+\begin{equation}
+    V = F^\dagger U F
+\end{equation}
+onde $F$ é o operador unitário de permutação associado à função $f$ tal que $F\ket{x} = \ket{f(x)}$, e $U$ é o operador diagonal de inversão de fase atuando sobre as imagens:
+\begin{equation}
+    U\ket{y} = 
+    \begin{cases} 
+        -\ket{y}, & \text{se } y \in \{f(x_k) \mid x_k \in S\} \\
+        \phantom{-}\ket{y}, & \text{caso contrário.}
+    \end{cases}
+\end{equation}
+Dessa forma, a aplicação de $F$ codifica a imagem no estado quântico, $U$ inverte a fase das saídas coincidentes com a tabela clássica, e $F^\dagger$ atua como a descomputação quântica necessária para retornar à base dos índices, garantindo que o oráculo $V\ket{x} = -\ket{x}$ marque precisamente os estados que geram colisões.
+
+\subsection{Implementação do Algoritmo BHT}
+
+A implementação prática do algoritmo concentra-se no motor de construção do oráculo modular $V = F^\dagger U F$ acoplado ao difusor de Householder para um domínio de 4 qubits ($N = 16$ itens):
+
+\begin{lstlisting}[caption={Motor do Algoritmo BHT: Construção do oráculo $V = F^\dagger U F$ e busca de colisão no Qiskit.}]
+# 1. Amostragem classica de M = ceil(N^(1/3)) elementos
+M = int(np.ceil(N ** (1 / 3)))
+amostras_x = list(np.random.choice(N, size=M, replace=False))
+tabela = {x: f_tilde[x] for x in amostras_x}
+alvos = set(tabela.values())
+
+# 2. Operador Unitario do Oraculo V = F_dag @ U @ F
+matriz_F = np.eye(N)[f_perm].T # Permutacao
+matriz_U = np.diag([-1.0 if (y // 2) in alvos else 1.0 for y in range(N)])
+matriz_V = matriz_F.T @ matriz_U @ matriz_F
+
+# 3. Circuito Quantico de Grover (Oraculo V + Difusor D)
+circuito_bht = QuantumCircuit(n_qubits, n_qubits)
+circuito_bht.h(range(n_qubits)) # Superposicao uniforme
+circuito_bht.append(UnitaryGate(matriz_V, label="Oraculo V"), range(n_qubits))
+circuito_bht.append(UnitaryGate(matriz_D, label="Difusor D"), range(n_qubits))
+circuito_bht.measure(range(n_qubits), range(n_qubits))
+
+# 4. Recuperacao do par de colisao (x1, x2)
+x_quantico = int(max(contagens, key=contagens.get), 2)
+x_classico = [k for k, v in tabela.items() if v == f_tilde[x_quantico]][0]
+\end{lstlisting}
+
+\begin{figure}[ht]
+    \centering
+    \includegraphics[width=0.85\linewidth]{images/bht_circ.png}
+    \caption{Circuito quântico do Algoritmo BHT estruturado com o operador de superposição $H^{\otimes 4}$, o oráculo unitário $V = F^\dagger U F$ e o difusor de Householder $D$, seguido pela medição na base computacional.}
+    \label{fig:bht_circ}
+\end{figure}
+
+\begin{figure}[ht]
+    \centering
+    \includegraphics[width=0.85\linewidth]{images/bht_hist.png}
+    \caption{Distribuição de probabilidades obtida no simulador após uma iteração de Grover, evidenciando a amplificação de amplitude dos estados associados às colisões.}
+    \label{fig:bht_hist}
+\end{figure}
+
+\subsection{Complexidade do Algoritmo BHT}
+
+A complexidade temporal do algoritmo BHT é avaliada pelo número total de consultas (\textit{queries}) à caixa-preta $f$:
+\begin{itemize}
+    \item A etapa de amostragem clássica consome $M = N^{1/3}$ consultas à função.
+    \item Como existem $M = N^{1/3}$ alvos em um espaço amostral de tamanho $N$, o número ótimo de iterações de Grover é:
+    \begin{equation}
+        R \approx \frac{\pi}{4}\sqrt{\frac{N}{M}} = \frac{\pi}{4}\sqrt{\frac{N}{N^{1/3}}} = \frac{\pi}{4} N^{(1 - 1/3)/2} = \mathcal{O}(N^{1/3})
+    \end{equation}
+\end{itemize}
+
+Somando as duas fases, o custo computacional total do algoritmo BHT é $\mathcal{O}(N^{1/3}) + \mathcal{O}(N^{1/3}) = \mathcal{O}(N^{1/3})$ consultas, superando a barreira clássica do Paradoxo do Aniversário de $\mathcal{O}(N^{1/2})$ e atingindo o limite inferior ótimo para o problema da colisão em caixas-pretas \cite{nielsen2010}.
 
 \section{Transformada de Fourier Quântica (QFT)}
 
@@ -989,24 +1066,24 @@ O operador unitário escolhido para o teste foi a porta de fase $P(\lambda)$. A 
 Para o registrador de controle (leitura), estipulamos $t = 3$ qubits, estabelecendo uma dimensão de espaço de $N = 2^3 = 8$. Esta configuração garante que o circuito possua precisão suficiente para medir fases fracionárias em oitavos exatos.
 
 \begin{lstlisting}[caption={Implementação do algoritmo de Estimação de Fases (QPE) para extração da fase $\theta = 1/8$.}]
-# 1. Preparação dos registradores
-qc = QuantumCircuit(4, 3)
-qc.h([0, 1, 2]) # Superposição no controle (Paralelismo)
-qc.x(3)         # Preparação do Autovetor |1> no alvo
+# 1. Preparação dos registradores (3 leitura + 1 alvo)
+qubits_leitura = 3
+circuito_qpe = QuantumCircuit(qubits_leitura + 1, qubits_leitura)
+circuito_qpe.h(range(qubits_leitura)) # Superposição na leitura
+circuito_qpe.x(qubits_leitura)         # Autovetor |1> no alvo
 
-# 2. Phase Kickback com potências de U
-angulo = 2 * np.pi * (1/8)
+# 2. Phase Kickback com potências de 2 (U^1, U^2, U^4)
+angulo_rotacao = 2 * np.pi * (1 / 8) # Fase theta = 1/8
 repeticoes = 1
-for counting_qubit in range(3):
-    for i in range(repeticoes):
-        qc.cp(angulo, counting_qubit, 3)
-    repeticoes *= 2 # Escalonamento das potencias (1, 2, 4, ...)
+for q_controle in range(qubits_leitura):
+    for _ in range(repeticoes):
+        circuito_qpe.cp(angulo_rotacao, q_controle, qubits_leitura)
+    repeticoes *= 2 # Escalonamento exponencial
 
 # 3. Decodificador: QFT Inversa
-qft_inversa = QFT(num_qubits=3, inverse=True, do_swaps=True).to_gate()
-qc.append(qft_inversa, [0, 1, 2])
-
-qc.measure ([0, 1, 2], [0, 1, 2])
+decodificador_qft = QFT(num_qubits=qubits_leitura, inverse=True, do_swaps=True).to_gate()
+circuito_qpe.append(decodificador_qft, range(qubits_leitura))
+circuito_qpe.measure(range(qubits_leitura), range(qubits_leitura))
 \end{lstlisting}
 
 O circuito gerado, demonstrando a aplicação escalonada das portas unitárias controladas e a subsequente decodificação via Transformada de Fourier Inversa, pode ser visualizado na figura \ref{fig:qpe_circuit}.
@@ -1067,56 +1144,50 @@ A segunda etapa é o motor quântico. A construção de um circuito aritmético 
 O código a seguir demonstra a união da matemática clássica com o circuito quântico de QPE para extrair o período escondido nas fases do operador unitário:
 
 \begin{lstlisting}[caption={Implementação híbrida do Algoritmo de Shor fatorando o número 15.}]
-N = 15
-a = 7
+numero_N = 15
+palpite_a = 7
 
-# 1. Funcao Classica para criar a Matriz Unitaria
-def criar_matriz_do_relogio(a, N, num_qubits):
-    tamanho = 2**num_qubits
-    U = np.zeros((tamanho, tamanho))
-    for i in range(tamanho):
+# 1. Operador Unitário do Relógio Modular: |i> -> |(a*i) mod N>
+def construir_matriz_relogio_modular(a, N, total_qubits):
+    dimensao = 2 ** total_qubits
+    matriz_U = np.zeros((dimensao, dimensao))
+    for i in range(dimensao):
         if i < N:
-            U[(a * i) % N, i] = 1
+            matriz_U[(a * i) % N, i] = 1.0
         else:
-            U[i, i] = 1
-    return U
+            matriz_U[i, i] = 1.0
+    return matriz_U
 
-t = 4
-n_alvo = 4
-qc = QuantumCircuit(t + n_alvo, t)
+# 2. Circuito Quântico de Busca de Período (QPE)
+qubits_contagem = 4
+qubits_alvo = 4
+circuito_shor = QuantumCircuit(qubits_contagem + qubits_alvo, qubits_contagem)
 
-qc.h(range(t))
-qc.x(t)
+circuito_shor.h(range(qubits_contagem))
+circuito_shor.x(qubits_contagem) # Inicializa alvo em |1>
 
-# Phase Kickback Otimizado
-for counting_qubit in range(t):
-    potencia = 2**counting_qubit
-    matriz_base = criar_matriz_do_relogio(a, N, n_alvo)
-    matriz_pot = np.linalg.matrix_power(matriz_base, potencia)
-    
-    porta_cu = UnitaryGate(matriz_pot).control(1)
-    alvos = list(range(t, t + n_alvo))
-    qc.append(porta_cu, [counting_qubit] + alvos)
+matriz_base = construir_matriz_relogio_modular(palpite_a, numero_N, qubits_alvo)
+alvos = list(range(qubits_contagem, qubits_contagem + qubits_alvo))
 
-# Decodificador de Fases
-qft_inversa = QFTGate(num_qubits=t).inverse()
-qc.append(qft_inversa, range(t))
-qc.measure(range(t), range(t))
+for q_leitura in range(qubits_contagem):
+    potencia = 2 ** q_leitura
+    matriz_potencia = np.linalg.matrix_power(matriz_base, potencia)
+    porta_cu = UnitaryGate(matriz_potencia, label=f"U^{potencia}").control(1)
+    circuito_shor.append(porta_cu, [q_leitura] + alvos)
 
-# 4. Pos-processamento Classico (Fracoes Continuas)
-medicoes_ordenadas = sorted(counts.items(), key=lambda x: x[1], reverse=True)
-melhor_medicao = medicoes_ordenadas[0][0]
-if melhor_medicao == '0000' and len(medicoes_ordenadas) > 1:
-    melhor_medicao = medicoes_ordenadas[1][0]
+# 3. Decodificação via QFT Inversa e Medição
+decodificador_qft = QFTGate(num_qubits=qubits_contagem).inverse()
+circuito_shor.append(decodificador_qft, range(qubits_contagem))
+circuito_shor.measure(range(qubits_contagem), range(qubits_contagem))
 
-fase_medida = int(melhor_medicao, 2) / (2**t)
-fracao = Fraction(fase_medida).limit_denominator(N)
-periodo_r = fracao.denominator
+# 4. Pós-processamento Clássico (Frações Contínuas e MDC)
+fase_medida = int(melhor_estado, 2) / (2 ** qubits_contagem)
+periodo_r = Fraction(fase_medida).limit_denominator(numero_N).denominator
 
 if periodo_r % 2 == 0:
-    fator_1 = math.gcd(int(a**(periodo_r / 2) - 1), N)
-    fator_2 = math.gcd(int(a**(periodo_r / 2) + 1), N)
-    print(f"Fatores de {N}: {fator_1} e {fator_2}")
+    fator_1 = math.gcd(int(palpite_a ** (periodo_r / 2) - 1), numero_N)
+    fator_2 = math.gcd(int(palpite_a ** (periodo_r / 2) + 1), numero_N)
+    print(f"Fatores de {numero_N}: {fator_1} e {fator_2}")
 \end{lstlisting}
 
 A terceira e última etapa ocorre após a medição quântica. O hardware retorna estados binários (como \texttt{0100} ou \texttt{1100}) que correspondem a frações decimais da fase (ex: $0.25 ou 0.75$). Através do algoritmo clássico de Frações Contínuas (\texttt{limit\_denominator}), o denominador da fração mais simples é extraído, revelando de forma determinística o período $r = 4$. Com esse período, sendo ele par, aplica-se a fórmula matemática de Euclides, resultando no cálculo bem-sucedido dos fatores primos $3$ e $5$, quebrando com sucesso a criptografia do número $15$.
@@ -1129,7 +1200,46 @@ A abordagem de Shor converte a fatoração no problema de busca do período $r$ 
 
 O gargalo computacional recai sobre a implementação em nível de portas lógicas do operador unitário de exponenciação modular controlada no hardware quântico. Através de métodos eficientes de multiplicação e adição modular repetida, essa operação inteira pode ser construída utilizando $\mathcal{O}(n^3)$ portas lógicas universais \cite{nielsen2010}. Somada à QFT no registrador de medição $\mathcal{O}(n^2)$, a complexidade geral do Algoritmo de Shor é assintoticamente limitada a $\mathcal{O}(n^3)$. Esta drástica redução de super-polinomial para polinomial é o que fundamenta a futura ameaça quântica à criptografia moderna.
 
-\section{Pesquisas Futuras}
+\section{Pesquisas Futuras e Algoritmos de Consulta}
+
+O presente trabalho consolidou os fundamentos matemáticos e a prática computacional dos principais pilares da informação quântica, abrangendo desde os estados emaranhados multipartidos (Bell, CHSH e GHZ) até os motores algorítmicos universais de busca (Grover) e estimativa de período via transformada de Fourier (QPE e Shor). Como continuidade desta pesquisa e direcionamento para estudos futuros em nível de pós-graduação, destaca-se o aprofundamento no ecossistema mais amplo de \textit{algoritmos de consulta quânticos} (\textit{quantum query algorithms}), bem como na exploração de suas aplicações práticas em criptoanálise e otimização.
+
+Entre as vertentes teóricas mais promissoras para investigações futuras, destacam-se:
+
+\begin{enumerate}[label=\textbf{\arabic*.}]
+    \item \textbf{Algoritmo de Simon (Periodicidade sob XOR):} Formulado por Daniel Simon em 1994, este algoritmo é historicamente considerado o elo conceitual que inspirou Peter Shor. Dada uma função caixa-preta $f: \{0,1\}^n \to \{0,1\}^n$ com a promessa de que $f(x \oplus s) = f(x)$ para uma string oculta $s$, o algoritmo quântico identifica o período $s$ com apenas $\mathcal{O}(n)$ consultas, em contraste com a barreira clássica exponencial de $\mathcal{O}(2^{n/2})$ \cite{nielsen2010}. A futura implementação deste protocolo fornecerá uma base didática direta sobre como a amostragem em superposição linear resolve problemas de subgrupos ocultos abelianos.
+    
+    \item \textbf{Contagem Quântica (\textit{Quantum Counting}):} Proposta por Brassard, H{\o}yer e Tapp em 1998, consiste na união direta de dois algoritmos desenvolvidos nesta iniciação científica: o operador de difusão de Grover e a Estimação de Fase Quântica (QPE). Ao tratar a iteração de Grover como um operador unitário e aplicar a QPE sobre seus autovetores, é possível estimar com alta precisão o número exato $M$ de soluções existentes no espaço de busca em tempo $\mathcal{O}(\sqrt{N/M})$. Essa técnica é essencial para automatizar a busca de Grover quando a quantidade de alvos não é previamente conhecida.
+    
+    \item \textbf{Problema de Elementos Distintos e Caminhadas Quânticas (\textit{Quantum Walks}):} Como extensão natural do algoritmo BHT, o problema de verificar se todos os elementos de uma lista são distintos (identificando colisões arbitrárias) foi solucionado de forma ótima por Andris Ambainis utilizando caminhadas quânticas em grafos de Johnson. O estudo deste formalismo permitirá expandir a análise para além do modelo padrão de circuitos de portas lógicas, adentrando a dinâmica de caminhadas quânticas contínuas e discretas.
+    
+    \item \textbf{Algoritmos Pioneiros de Deutsch-Jozsa e Bernstein-Vazirani:} Representam os primeiros exemplos históricos de oráculos determinísticos onde a computação quântica supera algoritmos clássicos com uma única consulta ($\mathcal{O}(1)$), explorando o paralelismo quântico e o cancelamento exato por interferência de fase.
+\end{enumerate}
+
+Para sintetizar o panorama comparativo entre os limites clássicos e as acelerações quânticas dos algoritmos discutidos, a Tabela \ref{tab:query_complexity} apresenta o resumo de complexidade de consulta (\textit{Query Complexity}):
+
+\begin{table}[ht]
+    \centering
+    \resizebox{\textwidth}{!}{%
+    \begin{tabular}{l l l l}
+        \hline
+        \textbf{Algoritmo} & \textbf{Problema Central} & \textbf{Complexidade Clássica} & \textbf{Complexidade Quântica} \\
+        \hline
+        \textbf{Deutsch-Jozsa} & Função Constante vs. Balanceada & $\mathcal{O}(2^{n-1} + 1)$ (det.) & $\mathcal{O}(1)$ (exato) \\
+        \textbf{Bernstein-Vazirani} & Descoberta de String Oculta $a \cdot x$ & $\mathcal{O}(n)$ & $\mathcal{O}(1)$ \\
+        \textbf{Simon} & Período Oculto sob XOR & $\mathcal{O}(2^{n/2})$ & $\mathcal{O}(n)$ \\
+        \textbf{Grover} & Busca em Dados Não Estruturados & $\mathcal{O}(N)$ & $\mathcal{O}(\sqrt{N})$ \\
+        \textbf{BHT} & Colisão em Função 2-para-1 & $\mathcal{O}(N^{1/2})$ & $\mathcal{O}(N^{1/3})$ \\
+        \textbf{Contagem Quântica} & Número de Soluções $M$ & $\mathcal{O}(N)$ & $\mathcal{O}(\sqrt{N})$ \\
+        \textbf{Shor} & Fatoração / Logaritmo Discreto & Super-polinomial & $\mathcal{O}(n^3)$ (polinomial) \\
+        \hline
+    \end{tabular}%
+    }
+    \caption{Quadro comparativo da complexidade assintótica de consulta entre modelos clássicos e quânticos.}
+    \label{tab:query_complexity}
+\end{table}
+
+Além do desenvolvimento analítico e simulação destes protocolos em bibliotecas avançadas (como Qiskit e PennyLane), pesquisas futuras poderão contemplar o estudo de algoritmos quânticos variacionais híbridos para a era NISQ (\textit{Noisy Intermediate-Scale Quantum}), tais como o VQE (\textit{Variational Quantum Eigensolver}) voltado à química quântica e o QAOA (\textit{Quantum Approximate Optimization Algorithm}) aplicado a problemas combinatórios em grafos, consolidando a ponte entre a teoria fundamental e a computação quântica aplicada.
 
 \printbibliography
 \end{document}
