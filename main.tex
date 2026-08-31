@@ -66,18 +66,18 @@ sorting=ynt
 \maketitle
 
 \begin{abstract}
-Este trabalho apresenta um estudo prático e teórico dos fundamentos da computação quântica e de seus principais algoritmos. O objetivo central é transpor a barreira entre o formalismo matemático do Espaço de Hilbert e a implementação de circuitos lógicos funcionais. Utilizando a linguagem Python e o \textit{framework} Qiskit, foram desenvolvidos e simulados experimentos contemplando a criação dos quatro Estados de Bell, a verificação empírica da Desigualdade CHSH e o emaranhamento multipartido (GHZ). Adicionalmente, o trabalho detalha a arquitetura e a execução de algoritmos quânticos avançados, especificamente o Algoritmo de Grover para busca não estruturada e o Algoritmo de Shor para fatoração de inteiros, apoiados pelas sub-rotinas da Transformada de Fourier Quântica (QFT) e da Estimação de Fases Quântica (QPE). Os resultados validam o ganho de eficiência e as vantagens geométricas inerentes ao processamento quântico frente aos métodos clássicos tradicionais.
+Este trabalho apresenta um estudo prático e teórico dos fundamentos da computação quântica e de seus principais algoritmos. O objetivo central é transpor a barreira entre o formalismo matemático do Espaço de Hilbert e a implementação de circuitos lógicos funcionais. Utilizando a linguagem Python e o \textit{framework} Qiskit, foram desenvolvidos e simulados experimentos contemplando a criação dos quatro Estados de Bell, a verificação empírica da Desigualdade CHSH e o emaranhamento multipartido (GHZ). Adicionalmente, o trabalho detalha a arquitetura e a execução de algoritmos quânticos avançados, especificamente o Algoritmo de Grover para busca não estruturada, o Algoritmo BHT para resolução do problema da colisão e o Algoritmo de Shor para fatoração de inteiros, apoiados pelas sub-rotinas da Transformada de Fourier Quântica (QFT) e da Estimação de Fases Quântica (QPE). Os resultados validam o ganho de eficiência e as vantagens geométricas inerentes ao processamento quântico frente aos métodos clássicos tradicionais.
 
 \vspace{0.5cm}
-\noindent\textbf{Palavras-chave:} Computação Quântica, Qiskit, Algoritmo de Shor, Algoritmo de Grover, Informação Quântica.
+\noindent\textbf{Palavras-chave:} Computação Quântica, Qiskit, Algoritmo de Shor, Algoritmo de Grover, Algoritmo BHT, Informação Quântica.
 \end{abstract}
 
 \renewcommand{\abstractname}{Abstract}
 \begin{abstract}
-This work presents a practical and theoretical study of quantum computing fundamentals and its main algorithms. The central objective is to bridge the gap between the mathematical formalism of Hilbert Space and the implementation of functional logic circuits. Using Python and the Qiskit framework, experiments were developed and simulated covering the creation of the four Bell States, the empirical verification of the CHSH Inequality, and multipartite entanglement (GHZ). Additionally, the research details the architecture and execution of advanced quantum algorithms, specifically Grover's Algorithm for unstructured search and Shor's Algorithm for integer factorization, supported by the Quantum Fourier Transform (QFT) and Quantum Phase Estimation (QPE) subroutines. The results validate the efficiency gain and inherent geometric advantages of quantum processing over traditional classical methods.
+This work presents a practical and theoretical study of quantum computing fundamentals and its main algorithms. The central objective is to bridge the gap between the mathematical formalism of Hilbert Space and the implementation of functional logic circuits. Using Python and the Qiskit framework, experiments were developed and simulated covering the creation of the four Bell States, the empirical verification of the CHSH Inequality, and multipartite entanglement (GHZ). Additionally, the research details the architecture and execution of advanced quantum algorithms, specifically Grover's Algorithm for unstructured search, the BHT Algorithm for the collision problem, and Shor's Algorithm for integer factorization, supported by the Quantum Fourier Transform (QFT) and Quantum Phase Estimation (QPE) subroutines. The results validate the efficiency gain and inherent geometric advantages of quantum processing over traditional classical methods.
 
 \vspace{0.5cm}
-\noindent\textbf{Keywords:} Quantum Computing, Qiskit, Shor's Algorithm, Grover's Algorithm, Quantum Information.
+\noindent\textbf{Keywords:} Quantum Computing, Qiskit, Shor's Algorithm, Grover's Algorithm, BHT Algorithm, Quantum Information.
 \end{abstract}
 
 \clearpage
@@ -939,6 +939,8 @@ circuito_bht.measure(range(n_qubits), range(n_qubits))
 x_quantico = int(max(contagens, key=contagens.get), 2)
 x_classico = [k for k, v in tabela.items() if v == f_tilde[x_quantico]][0]
 \end{lstlisting}
+
+O circuito quântico completo montado no Qiskit é ilustrado na Figura \ref{fig:bht_circ}, e o histograma com a distribuição de probabilidades resultante da simulação no \texttt{AerSimulator} é apresentado na Figura \ref{fig:bht_hist}, comprovando a amplificação seletiva das amplitudes dos estados associados à colisão.
 
 \begin{figure}[ht]
     \centering
